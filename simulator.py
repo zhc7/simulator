@@ -22,6 +22,7 @@ class World:
             for e2 in self.entities:
                 F_12 = e1.collapse(e2)
                 e2.enforce(F_12)
+            e1.enforce(self.g)
 
         # 力学循环
         for e in self.entities:
