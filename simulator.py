@@ -14,8 +14,8 @@ class World:
     def step(self):
         # 运动学循环
         for e in self.entities:
-            e.s += self.tic * e.v
             e.v += self.tic * e.a
+            e.s += self.tic * e.v + self.tic ** 2 * e.a / 2
 
         # 碰撞循环
         for e1 in self.entities:
