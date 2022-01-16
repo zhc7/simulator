@@ -2,7 +2,8 @@ import numpy as np
 
 
 class Entity:
-    def __init__(self, mass, place, velocity, acceleration):
+    def __init__(self, shape, mass, place, velocity, acceleration):
+        self.shape = shape
         self.m = mass
         self.place = place
         self.v = velocity
@@ -17,3 +18,6 @@ class Entity:
         for f in self.forces:
             F += f
         self.a = F / self.m
+
+    def collapse(self, e):
+        self.shape.collapse(self.place, e)
