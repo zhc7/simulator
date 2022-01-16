@@ -16,11 +16,13 @@ class World:
         # 运动学循环
         for e in self.entities:
             e.v += self.tic * e.a
-            e.s += self.tic * e.v + self.tic ** 2 * e.a / 2
+            e.place += self.tic * e.v + self.tic ** 2 * e.a / 2
 
         # 碰撞循环
         for e1 in self.entities:
             for e2 in self.entities:
+                if e1 == e2:
+                    continue
                 F_12 = e1.collapse(e2)
                 e2.enforce(F_12)
             e1.enforce(self.g)

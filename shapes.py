@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 
 class Circle:
@@ -9,7 +10,10 @@ class Circle:
 
     def collapse(self, place, e):
         if e.shape == "Circle":
-            return abs(self.radius + e.radius - np.linalg.norm(e.place-place, ord=1)) * self.k
+            d = e.place - place
+            m = math.sqrt(np.linalg.norm(d))
+            f = max(self.radius + e.radius - m, 0) * self.k
+            return np.array(f * d / m)
 
 
 class InnerCircle:
@@ -20,4 +24,7 @@ class InnerCircle:
 
     def collapse(self, place, e):
         if e.shape == "Circle":
-            return abs(self.radius - e.radius - np.linalg.norm(e.place-place, ord=1)) * self.k
+            d = e.place - place
+            m = math.sqrt(np.linalg.norm(d))
+            f = min(self.radius - e.radius - m, 0) * self.k
+            return np.array(f * d / m)

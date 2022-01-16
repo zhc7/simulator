@@ -11,13 +11,15 @@ class Entity:
         self.forces = []
 
     def enforce(self, force):
-        self.forces.append(force)
+        if force is not None:
+            self.forces.append(force)
 
     def calc_a(self):
         F = 0
         for f in self.forces:
             F += f
         self.a = F / self.m
+        self.forces = []
 
     def collapse(self, e):
-        self.shape.collapse(self.place, e)
+        return self.shape.collapse(self.place, e)
