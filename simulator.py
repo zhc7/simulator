@@ -1,5 +1,6 @@
 import numpy as np
 import time
+import pickle
 
 
 class World:
@@ -31,11 +32,11 @@ class World:
     def loop(self):
         t = 0
         timestamp = time.time()
-        inf = self.total_time is "infinite"
+        inf = self.total_time == "infinite"
+        record = []
         while inf or t < self.total_time:
             self.step()
             if self.mode == "display":
-                time.sleep(self.tic - (time.time() - timestamp))
-                # todo: display
+                record.append(pickle.dumps(self))
             t += self.tic
-            timestamp = time.time()
+        return record
