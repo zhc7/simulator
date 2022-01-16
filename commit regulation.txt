@@ -1,0 +1,7 @@
+[+] new feature / add
+[-] remove things
+[*] change / modification
+[/] refactor
+[$] settings / IDE
+[^] test related / debug
+[?] docs
