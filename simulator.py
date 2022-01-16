@@ -29,10 +29,12 @@ class World:
 
     def loop(self):
         t = 0
+        timestamp = time.time()
         inf = self.total_time is "infinite"
         while inf or t < self.total_time:
-            if self.mode == "display":
-                time.sleep(self.tic)
-                # todo: display
             self.step()
+            if self.mode == "display":
+                time.sleep(self.tic - (time.time() - timestamp))
+                # todo: display
             t += self.tic
+            timestamp = time.time()
