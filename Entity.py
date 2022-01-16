@@ -2,12 +2,11 @@ import numpy as np
 
 
 class Entity:
-    def __init__(self, mass, place, velocity, acceleration, k):
+    def __init__(self, mass, place, velocity, acceleration):
         self.m = mass
         self.place = place
         self.v = velocity
         self.a = acceleration
-        self.k = k
         self.forces = []
 
     def enforce(self, force):
@@ -18,7 +17,3 @@ class Entity:
         for f in self.forces:
             F += f
         self.a = F / self.m
-
-    def collapse(self, e):
-        d = self.check_border(e)
-        return d * self.k
