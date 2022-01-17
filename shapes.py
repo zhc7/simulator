@@ -14,6 +14,7 @@ class Circle:
             m = math.sqrt(np.linalg.norm(d))
             f = max(self.radius + e.radius - m, 0) * self.k
             return np.array(f * d / m)
+        return 0
 
 
 class InnerCircle:
@@ -28,3 +29,4 @@ class InnerCircle:
             m = math.sqrt(np.linalg.norm(d))
             f = min(self.radius - e.radius - m, 0) * self.k
             return np.array(f * d / m)
+        return 0

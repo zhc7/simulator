@@ -25,6 +25,7 @@ class World:
                     continue
                 F_12 = e1.collapse(e2)
                 e2.enforce(F_12)
+                e1.enforce(-F_12)
             e1.enforce(self.g)
 
         # 力学循环
