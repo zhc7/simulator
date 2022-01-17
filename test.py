@@ -1,6 +1,8 @@
 import time
 import pickle
 import numpy as np
+
+from Player import Player
 from shapes import *
 from simulator import World
 from Entity import Entity
@@ -21,3 +23,5 @@ if __name__ == '__main__':
     t2 = time.time()
     print(t2 - t1)
     print(len(pickle.dumps(result)), sep="\n")
+    p = Player(result[0])
+    p.play(result)

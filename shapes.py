@@ -1,12 +1,14 @@
 import numpy as np
 import math
+from turtle import Turtle
 
 
 class Circle:
-    def __init__(self, radius, k=10**2):
+    def __init__(self, radius: int, k=10**2, color="blue"):
         self.radius = radius
         self.shape = "Circle"
         self.k = k
+        self.color = color
 
     def collapse(self, place, e):
         if e.shape == "Circle":
@@ -15,6 +17,13 @@ class Circle:
             f = max(self.radius + e.radius - m, 0) * self.k
             return np.array(f * d / m)
         return 0
+
+    def draw(self, t: Turtle, ratio):
+        t.fillcolor(self.color)
+        t.begin_fill()
+        t.goto((np.array(t.pos()) - np.array([0, self.radius]))*ratio)
+        t.circle(self.radius*ratio)
+        t.end_fill()
 
 
 class InnerCircle:
@@ -30,3 +39,9 @@ class InnerCircle:
             f = min(self.radius - e.radius - m, 0) * self.k
             return np.array(f * d / m)
         return 0
+
+    def draw(self, t: Turtle, ratio):
+        t.begin_fill()
+        t.goto((np.array(t.pos()) - np.array([0, self.radius]))*ratio)
+        t.circle(self.radius*ratio)
+        t.end_fill()

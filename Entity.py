@@ -23,3 +23,8 @@ class Entity:
 
     def collapse(self, e):
         return self.shape.collapse(self.place, e)
+
+    def draw(self, t: Turtle, ratio):
+        t.goto(tuple(self.place))
+        self.shape.draw(t, ratio)
+        return self.place
