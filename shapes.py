@@ -1,6 +1,11 @@
+from __future__ import annotations
+
+import numpy
 import numpy as np
 import math
 from turtle import Turtle
+
+from Entity import Entity
 
 
 class Circle:
@@ -10,7 +15,7 @@ class Circle:
         self.k = k
         self.color = color
 
-    def collapse(self, place, e):
+    def collapse(self, place: numpy.ndarray, e: Entity) -> np.ndarray | int:
         if isinstance(e.shape, Circle):
             d = e.place - place
             m = np.linalg.norm(d)
@@ -27,12 +32,12 @@ class Circle:
 
 
 class InnerCircle:
-    def __init__(self, radius, k=10**4):
+    def __init__(self, radius: int, k=10**4):
         self.radius = radius
         self.shape = "InnerCircle"
         self.k = k
 
-    def collapse(self, place, e):
+    def collapse(self, place, e: Entity) -> np.ndarray | int:
         if isinstance(e.shape, Circle):
             d = e.place - place
             m = np.linalg.norm(d)

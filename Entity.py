@@ -1,16 +1,20 @@
+from turtle import Turtle
 import numpy as np
 
 
 class Entity:
-    def __init__(self, shape, mass, place, velocity, acceleration):
+    def __init__(self, shape, mass, place: np.ndarray, velocity: np.ndarray, acceleration: np.ndarray, fixed=False):
         self.shape = shape
         self.m = mass
         self.place = place
         self.v = velocity
         self.a = acceleration
         self.forces = []
+        self.fixed = fixed
 
-    def enforce(self, force):
+    def enforce(self, force: np.ndarray):
+        if self.fixed:
+            return
         if force is not None:
             self.forces.append(force)
 
@@ -21,7 +25,7 @@ class Entity:
         self.a = F / self.m
         self.forces = []
 
-    def collapse(self, e):
+    def collapse(self, e: 'Entity'):
         return self.shape.collapse(self.place, e)
 
     def draw(self, t: Turtle, ratio):

@@ -1,10 +1,13 @@
 import numpy as np
-import time
 import pickle
+
+from typing import *
+
+from Entity import Entity
 
 
 class World:
-    def __init__(self, entities, constants, mode="display", tic=0.01, total_time="infinite"):
+    def __init__(self, entities: List[Entity], constants: Dict, mode="display", tic=0.01, total_time="infinite"):
         self.entities = entities
         self.constants = constants
         self.mode = mode
@@ -12,7 +15,7 @@ class World:
         self.total_time = total_time
         self.g = self.constants["g"]
 
-    def step(self):
+    def step(self) -> None:
         # 运动学循环
         for e in self.entities:
             e.v += self.tic * e.a
@@ -32,9 +35,8 @@ class World:
         for e in self.entities:
             e.calc_a()
 
-    def loop(self):
+    def loop(self) -> List[bytes]:
         t = 0
-        timestamp = time.time()
         inf = self.total_time == "infinite"
         record = []
         while inf or t < self.total_time:

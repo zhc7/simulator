@@ -5,3 +5,4 @@
 [$] settings / IDE
 [^] test related / debug
 [?] docs
+[%] prettify / style
