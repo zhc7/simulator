@@ -11,10 +11,10 @@ class Circle:
         self.color = color
 
     def collapse(self, place, e):
-        if e.shape == "Circle":
+        if isinstance(e.shape, Circle):
             d = e.place - place
-            m = math.sqrt(np.linalg.norm(d))
-            f = max(self.radius + e.radius - m, 0) * self.k
+            m = np.linalg.norm(d)
+            f = max(self.radius + e.shape.radius - m, 0) * self.k
             return np.array(f * d / m)
         return 0
 
@@ -33,10 +33,10 @@ class InnerCircle:
         self.k = k
 
     def collapse(self, place, e):
-        if e.shape == "Circle":
+        if isinstance(e.shape, Circle):
             d = e.place - place
-            m = math.sqrt(np.linalg.norm(d))
-            f = min(self.radius - e.radius - m, 0) * self.k
+            m = np.linalg.norm(d)
+            f = min(self.radius - e.shape.radius - m, 0) * self.k
             return np.array(f * d / m)
         return 0
 

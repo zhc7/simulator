@@ -15,7 +15,7 @@ class Entity:
             self.forces.append(force)
 
     def calc_a(self):
-        F = 0
+        F = 0.0
         for f in self.forces:
             F += f
         self.a = F / self.m
