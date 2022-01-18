@@ -23,7 +23,7 @@ class World:
             for e2 in self.entities:
                 if e1 == e2:
                     continue
-                F_12 = e1.collapse(e2)
+                F_12 = e1.collapse(e2, self.constants)
                 e2.enforce(F_12)
                 e1.enforce(-F_12)
             e1.enforce(self.g)

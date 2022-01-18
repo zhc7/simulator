@@ -1,7 +1,9 @@
 from __future__ import annotations
 import numpy as np
 from turtle import Turtle
-from Entity import Entity
+import typing
+if typing.TYPE_CHECKING:
+    from Entity import Entity
 
 
 class Shape:
