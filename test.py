@@ -1,7 +1,5 @@
 import time
 import pickle
-import numpy as np
-
 from Player import Player
 from shapes import *
 from simulator import World

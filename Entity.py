@@ -1,9 +1,12 @@
+from __future__ import annotations
 from turtle import Turtle
 import numpy as np
+from shapes import Shape
 
 
 class Entity:
-    def __init__(self, shape, mass, place: np.ndarray, velocity: np.ndarray, acceleration: np.ndarray, fixed=False):
+    def __init__(self, shape: Shape, mass: float,
+                 place: np.ndarray, velocity: np.ndarray | int, acceleration: np.ndarray | int, fixed=False):
         self.shape = shape
         self.m = mass
         self.place = place
