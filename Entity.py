@@ -25,6 +25,8 @@ class Entity:
             self.forces.append(force)
 
     def calc_a(self):
+        if self.fixed:
+            return
         F = 0.0
         for f in self.forces:
             F += f
@@ -32,11 +34,13 @@ class Entity:
         self.forces = []
 
     def collapse(self, e: 'Entity', constants: Dict):
-        mechanical = self.shape.collapse(self.place, e)
         r_vector = e.place - self.place
         r = np.linalg.norm(r_vector)
-        electrical = self.q * e.q / (constants["epsilon0"] * 8  # 由于相互作用力在enforce会算两遍 这里除以2 避免多算
-                                     * constants["pi"] * r ** 2) * r_vector / r
+        mechanical = self.shape.collapse(self.place, e, r)
+        if self.q:
+            electrical = self.q * e.q / (constants["epsilon0"] * 4 * constants["pi"] * r ** 2) * r_vector / r
+        else:
+            electrical = 0
         return mechanical + electrical
 
     def draw(self, t: Turtle, ratio):

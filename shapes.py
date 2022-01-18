@@ -7,7 +7,7 @@ if typing.TYPE_CHECKING:
 
 
 class Shape:
-    def collapse(self, place: np.ndarray, e: Entity) -> np.ndarray | int:
+    def collapse(self, place: np.ndarray, e: Entity, r: float) -> np.ndarray | int:
         pass
 
     def draw(self, t: Turtle, ratio: float):
@@ -21,12 +21,13 @@ class Circle(Shape):
         self.k = k
         self.color = color
 
-    def collapse(self, place: np.ndarray, e: Entity) -> np.ndarray | int:
+    def collapse(self, place: np.ndarray, e: Entity, r: float) -> np.ndarray | int:
         if isinstance(e.shape, Circle):
+            if r > (self.radius + e.shape.radius):
+                return 0
             d = e.place - place
-            m = np.linalg.norm(d)
-            f = max(self.radius + e.shape.radius - m, 0) * self.k
-            return np.array(f * d / m)
+            f = (self.radius + e.shape.radius - r) * (self.k + e.shape.k)
+            return np.array(f * d / r)
         return 0
 
     def draw(self, t: Turtle, ratio):
@@ -43,12 +44,13 @@ class InnerCircle(Shape):
         self.shape = "InnerCircle"
         self.k = k
 
-    def collapse(self, place, e: Entity) -> np.ndarray | int:
+    def collapse(self, place, e: Entity, r: float) -> np.ndarray | int:
         if isinstance(e.shape, Circle):
+            if r < (self.radius - e.shape.radius):
+                return 0
             d = e.place - place
-            m = np.linalg.norm(d)
-            f = min(self.radius - e.shape.radius - m, 0) * self.k
-            return np.array(f * d / m)
+            f = (self.radius - e.shape.radius - r) * self.k
+            return np.array(f * d / r)
         return 0
 
     def draw(self, t: Turtle, ratio):

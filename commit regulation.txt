@@ -6,3 +6,4 @@
 [^] test related / debug
 [?] docs
 [%] prettify / style
+[>] optimization / performance improvement

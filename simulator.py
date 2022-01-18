@@ -16,29 +16,33 @@ class World:
         # 运动学循环
         for e in self.entities:
             e.v += self.tic * e.a
-            e.place += self.tic * e.v + self.tic ** 2 * e.a / 2
+            e.place += self.tic * e.v  # + self.tic ** 2 * e.a / 2
 
         # 碰撞循环
-        for e1 in self.entities:
-            for e2 in self.entities:
-                if e1 == e2:
-                    continue
-                F_12 = e1.collapse(e2, self.constants)
-                e2.enforce(F_12)
-                e1.enforce(-F_12)
+        for i in range(len(self.entities)):
+            e1 = self.entities[i]
+            for j in range(i+1, len(self.entities)):
+                e2 = self.entities[j]
+                F = e1.collapse(e2, self.constants)
+                e2.enforce(F)
+                e1.enforce(-F)
             e1.enforce(self.g)
 
         # 力学循环
         for e in self.entities:
             e.calc_a()
 
-    def loop(self) -> List[bytes]:
+    def loop(self, record_rate=0.1) -> List[bytes]:
+        """record_rate: expected time span between recording"""
         t = 0
         inf = self.total_time == "infinite"
         record = []
+        n = 0
         while inf or t < self.total_time:
             self.step()
             if self.mode == "display":
-                record.append(pickle.dumps(self))
+                if t >= record_rate * n:
+                    record.append(pickle.dumps(self))
+                    n += 1
             t += self.tic
         return record

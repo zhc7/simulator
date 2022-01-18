@@ -20,7 +20,7 @@ class Player:
         self.t_time = turtle.Turtle()
         self.t_time.hideturtle()
         self.t_time.penup()
-        self.t_time.goto(-200, 200)
+        self.t_time.goto(-400, 200)
 
     def draw(self, world: World):
         turtle.tracer(False)
@@ -30,21 +30,21 @@ class Player:
             self.places[i] = tuple(e.draw(t, self.ratio))
         turtle.tracer(True)
 
-    def play(self, worlds: List[World | bytes], fps=10):
+    def play(self, worlds: List[World | bytes], fps=10, record_rate=0.1):
         delay = 1 / fps
         n = 0
         slices = []
         for i in range(len(worlds)):
-            if i * self.tic > n * delay:
+            if i * record_rate >= n * delay:
                 slices.append(i)
                 n += 1
         t = 0
+        t1 = time.time()
         for i in slices:
             world = worlds[i]
-            t1 = time.time()
             self.draw(world if type(world) == World else pickle.loads(world))
-            t2 = time.time()
             self.t_time.write(str(round(t, 2)))
-            time.sleep(delay - (t2 - t1))
+            t2 = time.time()
+            time.sleep(max(t - (t2 - t1), 0))
             self.t_time.clear()
             t += delay

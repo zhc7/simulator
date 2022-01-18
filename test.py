@@ -24,10 +24,10 @@ world = World([Box, c1, c2, c3], constants, tic=0.0001)
 if __name__ == '__main__':
     world.total_time = 10
     t1 = time.time()
-    result = world.loop()
+    result = world.loop(0.1)
     t2 = time.time()
     print(t2 - t1)
     print(len(pickle.dumps(result)), sep="\n")
     p = Player(result[0])
     # input()
-    p.play(result)
+    p.play(result, record_rate=0.1)
